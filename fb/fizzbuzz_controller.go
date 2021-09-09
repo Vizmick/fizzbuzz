@@ -7,14 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type FizzbuzzRequest struct {
-	Int1  int    `form:"int1" json:"int1"`
-	Int2  int    `form:"int2" json:"int2"`
-	Limit int    `form:"limit" json:"limit"`
-	Str1  string `form:"str1" json:"str1"`
-	Str2  string `form:"str2" json:"str2"`
-}
-
 func GetFizzBuzz(c *gin.Context) {
 	var fbRequest FizzbuzzRequest
 	log.Println("1")
@@ -23,6 +15,7 @@ func GetFizzBuzz(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, "")
 		return
 	}
+	log.Println(fbRequest)
 	list, err := fizzbuzzList(fbRequest)
 	log.Println(list)
 	if err != nil {
@@ -30,4 +23,12 @@ func GetFizzBuzz(c *gin.Context) {
 	}
 	log.Println(list)
 	c.IndentedJSON(http.StatusOK, list)
+}
+
+func GetMostFrequent(c *gin.Context) {
+	response, err := mostFrequentRequest()
+	if err != nil {
+		return
+	}
+	c.IndentedJSON(http.StatusOK, response)
 }

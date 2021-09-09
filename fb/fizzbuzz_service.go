@@ -6,6 +6,7 @@ import (
 )
 
 func fizzbuzzList(fbRequest FizzbuzzRequest) ([]string, error) {
+	addRequest(fbRequest)
 	if fbRequest.Limit < 1 {
 		return nil, errors.New("limit neds to be greater than 1")
 	}

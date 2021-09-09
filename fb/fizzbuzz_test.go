@@ -2,6 +2,7 @@ package fb
 
 import (
 	"fmt"
+	"log"
 	"strings"
 	"testing"
 )
@@ -13,4 +14,13 @@ func TestFizzbuzz(t *testing.T) {
 	if err != nil || strings.Join(list, ",") != "1,two,three,two,5,twothree" {
 		t.Fatalf("unexpected error")
 	}
+}
+
+func TestMostFrequent(t *testing.T) {
+	request, err := mostFrequentRequest()
+	if err != nil {
+		t.Fatalf(fmt.Sprint(err))
+	}
+	fmt.Println("habab")
+	log.Printf("Most frequent request:%v", request)
 }
