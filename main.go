@@ -1,13 +1,9 @@
 package main
 
 import (
-	"database/sql"
-
 	"example.com/fizzbuzz/fb"
 	"github.com/gin-gonic/gin"
 )
-
-var db *sql.DB
 
 func main() {
 	router := gin.Default()
