@@ -7,8 +7,8 @@ import (
 
 func fizzbuzzList(fbRequest FizzbuzzRequest) ([]string, error) {
 	addRequest(fbRequest)
-	if fbRequest.Limit < 1 {
-		return nil, errors.New("limit neds to be greater than 1")
+	if fbRequest.Limit < 1 || fbRequest.Int1*fbRequest.Int2 == 0 {
+		return nil, errors.New("limit neds to be greater than 1 and Int1&2 different from 0")
 	}
 	response := make([]string, fbRequest.Limit)
 	for i := 0; i < fbRequest.Limit; i++ {

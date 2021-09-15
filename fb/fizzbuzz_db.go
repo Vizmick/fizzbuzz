@@ -30,7 +30,7 @@ type FizzbuzzResponse struct {
 
 func mostFrequentRequest() (FizzbuzzResponse, error) {
 	var fbResponse FizzbuzzResponse
-
+	log.Println("searching for most frequent request in db")
 	row := db.QueryRow("SELECT `int1`, `int2`, `limit`, `str1`, `str2`,count(*) FROM fb_request GROUP BY `int1`, `int2`, `limit`, `str1`, `str2` ORDER BY count(*) DESC LIMIT 1")
 	if err := row.Scan(&fbResponse.Int1, &fbResponse.Int2, &fbResponse.Limit, &fbResponse.Str1, &fbResponse.Str2, &fbResponse.Count); err != nil {
 		if err == sql.ErrNoRows {
@@ -42,14 +42,17 @@ func mostFrequentRequest() (FizzbuzzResponse, error) {
 }
 
 func addRequest(fbRequest FizzbuzzRequest) (int64, error) {
+	log.Println("saving request in db")
 	result, err := db.Exec("INSERT INTO fb_request (`int1`, `int2`, `limit`, `str1`, `str2`) values (?,?,?,?,?)",
 		fbRequest.Int1, fbRequest.Int2, fbRequest.Limit, fbRequest.Str1, fbRequest.Str2)
 	if err != nil {
+		log.Println("saving request in db failed")
 		return 0, fmt.Errorf("fbRequest :%v", fbRequest)
 	}
 	id, err := result.LastInsertId()
 	if err != nil {
-		return 0, fmt.Errorf("addAlbum: %v", err)
+		log.Println("saving request in db failed")
+		return 0, fmt.Errorf("fbRequest: %v", err)
 	}
 	return id, nil
 }

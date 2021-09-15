@@ -9,7 +9,7 @@ import (
 
 func GetFizzBuzz(c *gin.Context) {
 	var fbRequest FizzbuzzRequest
-	log.Println("1")
+	log.SetPrefix("/fizzbuzz :")
 	if c.Bind(&fbRequest) != nil {
 		log.Println("error reading request")
 		c.IndentedJSON(http.StatusBadRequest, "")
@@ -17,8 +17,8 @@ func GetFizzBuzz(c *gin.Context) {
 	}
 	log.Println(fbRequest)
 	list, err := fizzbuzzList(fbRequest)
-	log.Println(list)
 	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
 	log.Println(list)
@@ -26,8 +26,10 @@ func GetFizzBuzz(c *gin.Context) {
 }
 
 func GetMostFrequent(c *gin.Context) {
+	log.SetPrefix("/frequent :")
 	response, err := mostFrequentRequest()
 	if err != nil {
+		log.Println("error in accessing database")
 		return
 	}
 	c.IndentedJSON(http.StatusOK, response)
